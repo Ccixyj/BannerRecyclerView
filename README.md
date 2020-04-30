@@ -19,7 +19,7 @@ class BannerSetting(var loop: Boolean = false, // 是否循坏
 
 添加依赖
 ```
-  implementation 'com.github.ZhangHao555:BannerRecyclerView:1.1.4'
+  implementation 'com.github.ZhangHao555:BannerRecyclerView:1.15'
 ```
 
 使用方式类似于RecyclerView 设置一个layoutManager 和一个Adapter即可使用
