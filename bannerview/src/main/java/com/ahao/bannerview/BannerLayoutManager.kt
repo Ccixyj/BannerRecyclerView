@@ -13,7 +13,6 @@ open class BannerLayoutManager : RecyclerView.LayoutManager(), RecyclerView.Smoo
 
     var smoothScrollTime = 500
     var loop: Boolean = true
-    private var hasLayout = false
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT)
@@ -28,9 +27,6 @@ open class BannerLayoutManager : RecyclerView.LayoutManager(), RecyclerView.Smoo
             removeAndRecycleAllViews(recycler)
             return
         }
-//        if (hasLayout) {
-//            return
-//        }
         detachAndScrapAttachedViews(recycler)
 
         val scrap = recycler.getViewForPosition(0)
@@ -51,7 +47,6 @@ open class BannerLayoutManager : RecyclerView.LayoutManager(), RecyclerView.Smoo
             layoutLeftItem(recycler)
         }
         doWithItem()
-        hasLayout = true
     }
 
     private fun layoutItem(viewForPosition: View, offsetX: Int): Int {
