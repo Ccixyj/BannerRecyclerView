@@ -28,9 +28,9 @@ open class BannerLayoutManager : RecyclerView.LayoutManager(), RecyclerView.Smoo
             removeAndRecycleAllViews(recycler)
             return
         }
-        if (hasLayout) {
-            return
-        }
+//        if (hasLayout) {
+//            return
+//        }
         detachAndScrapAttachedViews(recycler)
 
         val scrap = recycler.getViewForPosition(0)

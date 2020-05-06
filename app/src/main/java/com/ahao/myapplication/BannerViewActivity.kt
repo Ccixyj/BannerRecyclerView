@@ -31,7 +31,7 @@ class BannerViewActivity : AppCompatActivity() {
         banner_indicator.adapter = object : BannerIndicator.Adapter() {
             override fun getItemCount() = data.size
 
-            override fun addUnselectedView(parent: BannerIndicator){
+            override fun addUnselectedView(parent: BannerIndicator) {
                 val circleView = CircleView(parent.context).also {
                     it.radius = dp2px(parent.context, 2.5f)
                     it.color = Color.parseColor("#E6E6E6")
@@ -39,7 +39,7 @@ class BannerViewActivity : AppCompatActivity() {
                 parent.addView(circleView, dp2px(parent.context, 6f), dp2px(parent.context, 6f))
             }
 
-            override fun addSelectedView(parent: BannerIndicator){
+            override fun addSelectedView(parent: BannerIndicator) {
                 val circleView = CircleView(parent.context).also {
                     it.radius = dp2px(parent.context, 2.5f)
                     it.color = Color.parseColor("#FF00CEAA")
@@ -48,19 +48,35 @@ class BannerViewActivity : AppCompatActivity() {
             }
         }
 
+
         banner_view.setUp(BannerSetting().apply {
             slideTimeGap = 3000
             autoSlideSpeed = 1000
             loop = true
             canAutoSlide = true
-        }, Adapter())
+        }, adapter)
+
+        refresh()
+    }
+
+    val adapter by lazy { Adapter(data) }
+    private fun refresh() {
+        val runner = {
+            val d = data.shuffled()
+            adapter.data = d
+            println("shuffled $d")
+            adapter.notifyDataSetChanged()
+            refresh()
+            Unit
+        }
+        banner_view.postDelayed(runner, 3000)
     }
 
     private val data = listOf("https://www.wanandroid.com/blogimgs/fa822a30-00fc-4e0d-a51a-d704af48205c.jpeg",
             "https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png",
             "https://www.wanandroid.com/blogimgs/90c6cc12-742e-4c9f-b318-b912f163b8d0.png")
 
-    inner class Adapter : RecyclerView.Adapter<ViewHolder>() {
+    inner class Adapter(var data: List<String>) : RecyclerView.Adapter<ViewHolder>() {
 
         override fun onCreateViewHolder(group: ViewGroup, position: Int): ViewHolder {
             val item = LayoutInflater.from(this@BannerViewActivity).inflate(R.layout.view_banner_item_view, group, false)
